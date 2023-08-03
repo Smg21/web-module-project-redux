@@ -1,20 +1,31 @@
+import { connect } from 'react-redux';
+import { deleteMovie } from '../actions/movieActions';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
-const MovieListItem = (props)=> {
-  const { id, title, director, genre, metascore} = props.movie;
+const MovieListItem = ({ movie, deleteMovie }) => {
+  const history = useHistory();
 
-  return(<tr key={id}>
-      <td>{title}</td>
-      <td>{director}</td>
-      <td>{genre}</td>
-      <td>{metascore}</td>
+  const handleDelete = () => {
+    deleteMovie(movie.id);
+    history.push('/movies'); // Redirect the user to the '/movies' route after deletion.
+  };
+
+  return (
+    <tr>
+      <td>{movie.title}</td>
+      <td>{movie.director}</td>
+      <td>{movie.genre}</td>
+      <td>{movie.metascore}</td>
       <td>
-        <Link to={`/movies/${id}`} className="view">
-          <input type="button" className="btn btn-secondary" value="View"/>
-        </Link>
+        <button onClick={handleDelete}>Delete</button>
       </td>
-  </tr>);
-}
+    </tr>
+  );
+};
 
-export default MovieListItem;
+const mapDispatchToProps = {
+  deleteMovie: deleteMovie,
+};
+
+export default connect(null, mapDispatchToProps)(MovieListItem);

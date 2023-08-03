@@ -1,5 +1,6 @@
-import React from 'react';
+
 import { connect } from 'react-redux';
+import React from 'react';
 import MovieListItem from './MovieListItem';
 import MovieFooter from './MovieFooter';
 
@@ -37,48 +38,57 @@ export default connect(mapStateToProps)(MovieList);
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 // import React from 'react';
 // import { connect } from 'react-redux';
 // import MovieListItem from './MovieListItem';
 // import MovieFooter from './MovieFooter';
 
-// const MovieList = (props)=> {
-//     const movies = [];
 
-//     return (
-//         <div className="col">
-//             <table className="table table-striped table-hover">
-//                 <thead>
-//                 <tr>
-//                     <th>Title</th>
-//                     <th>Director</th>
-//                     <th>Genre</th>
-//                     <th>Metascore</th>
-//                     <th></th>
-//                 </tr>
-//                 </thead>
+// const MovieList = ({ movies }) => {
 
-//                 <tbody>
-//                     {
-//                         movies.map(movie=><MovieListItem key={movie.id} movie={movie}/>)
-//                     }
-//                 </tbody>
-//             </table>
-            
-//             <MovieFooter totalMovies={movies.length}/>
-//         </div>
-//     );
-// }
+//   return (
+//     <div className="col">
+//       <table className="table table-striped table-hover">
+//         <thead>
+//           <tr>
+//             <th>Title</th>
+//             <th>Director</th>
+//             <th>Genre</th>
+//             <th>Metascore</th>
+//             <th></th>
+//           </tr>
+//         </thead>
 
-// export default MovieList;
+//         <tbody>
+//           {movies.map((movie) => (
+//             <MovieListItem key={movie.id} movie={movie} />
+//           ))}
+//         </tbody>
+//       </table>
+
+//       <MovieFooter totalMovies={movies.length} />
+//     </div>
+//   );
+// };
+
+// const mapStateToProps = (state) => ({
+//   movies: state.movies,
+// });
+
+
+
+// export default connect(mapStateToProps)(MovieList);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
