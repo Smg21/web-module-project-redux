@@ -1,29 +1,31 @@
 import React, { useState } from 'react';
 import { addMovie } from './../actions/movieActions';
 import { connect } from 'react-redux';
-
 import { Link, useHistory } from 'react-router-dom';
 
-const AddMovieForm = (props) => {
-    const { push } = useHistory();
+const AddMovieForm = ({ addMovie }) => {
+  const { push } = useHistory();
 
-    const [movie, setMovie] = useState({
-        title: "",
-        director: "",
-        genre: "",
-        metascore: 0,
-        description:""
+  const [movie, setMovie] = useState({
+    title: "",
+    director: "",
+    genre: "",
+    metascore: 0,
+    description: ""
+  });
+
+  const handleChange = (e) => {
+    setMovie({
+      ...movie,
+      [e.target.name]: e.target.value
     });
+  }
 
-    const handleChange = (e) => {
-        setMovie({
-            ...movie,
-            [e.target.name]: e.target.value
-        });
-    }
-
-    const handleSubmit = (e) => {
-    }
+  const handleSubmit = (e) => {
+    e.preventDefault(); 
+    addMovie(movie);
+    push('/movies'); // Redirect to '/movies' after adding the movie
+  }
 
     const { title, director, genre, metascore, description } = movie;
     return(<div className="col">
@@ -67,4 +69,8 @@ const AddMovieForm = (props) => {
     </div>);
 }
 
-export default AddMovieForm;
+const mapDispatchToProps = {
+    addMovie: addMovie,
+  };
+  
+  export default connect(null, mapDispatchToProps)(AddMovieForm);

@@ -3,12 +3,12 @@ import { deleteMovie } from '../actions/movieActions';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-const MovieListItem = ({ movie, deleteMovie }) => {
+const MovieListItem = ({ movie, deleteMovie }) => { 
   const history = useHistory();
 
   const handleDelete = () => {
     deleteMovie(movie.id);
-    history.push('/movies'); // Redirect the user to the '/movies' route after deletion.
+    history.push('/movies'); 
   };
 
   return (
@@ -29,3 +29,5 @@ const mapDispatchToProps = {
 };
 
 export default connect(null, mapDispatchToProps)(MovieListItem);
+
+
