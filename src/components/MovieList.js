@@ -1,8 +1,11 @@
+// MovieList.js
+
 import React from 'react';
 import { connect } from 'react-redux';
 import MovieListItem from './MovieListItem';
+import { addFavorite, removeFavorite } from '../actions/favoritesActions';
 
-const MovieList = ({ movies }) => {
+const MovieList = ({ movies, favorites, addFavorite, removeFavorite }) => {
   return (
     <div className="col">
       <table className="table table-striped table-hover">
@@ -18,7 +21,13 @@ const MovieList = ({ movies }) => {
 
         <tbody>
           {movies.map((movie) => (
-            <MovieListItem key={movie.id} movie={movie} />
+            <MovieListItem
+              key={movie.id}
+              movie={movie}
+              favorites={favorites}
+              addFavorite={addFavorite}
+              removeFavorite={removeFavorite}
+            />
           ))}
         </tbody>
       </table>
@@ -27,10 +36,17 @@ const MovieList = ({ movies }) => {
 };
 
 const mapStateToProps = (state) => ({
-  movies: state.movies.movies, // Access the 'movies' state from the combined reducer
+  movies: state.movies.movies,
+  favorites: state.favorites.favorites,
 });
 
-export default connect(mapStateToProps)(MovieList);
+const mapDispatchToProps = {
+  addFavorite: addFavorite,
+  removeFavorite: removeFavorite,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MovieList);
+
 
 
 

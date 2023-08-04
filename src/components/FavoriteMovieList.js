@@ -3,8 +3,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { removeFavorite } from '../actions/favoritesActions';
 
-const FavoriteMovieList = ({ favorites }) => {
+const FavoriteMovieList = ({ favorites, removeFavorite }) => {
   return (
     <div className="col-xs savedContainer">
       <h5>Favorite Movies</h5>
@@ -12,8 +13,10 @@ const FavoriteMovieList = ({ favorites }) => {
         <div key={movie.id}>
           <Link className="btn btn-light savedButton" to={`/movies/${movie.id}`}>
             {movie.title}
-            <span className="material-icons">remove_circle</span>
           </Link>
+          <button onClick={() => removeFavorite(movie.id)}>
+            Remove from Favorites
+          </button>
         </div>
       ))}
     </div>
@@ -21,7 +24,12 @@ const FavoriteMovieList = ({ favorites }) => {
 };
 
 const mapStateToProps = (state) => ({
-  favorites: state.favorites.favorites, // Access the 'favorites' state from the combined reducer
+  favorites: state.favorites.favorites,
 });
 
-export default connect(mapStateToProps)(FavoriteMovieList);
+const mapDispatchToProps = {
+  removeFavorite: removeFavorite,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(FavoriteMovieList);
+
