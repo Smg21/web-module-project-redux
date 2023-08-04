@@ -1,40 +1,35 @@
+// Movie.js
+
 import React from 'react';
 import { connect } from 'react-redux';
-import MovieListItem from './MovieListItem';
-import MovieFooter from './MovieFooter';
+import { useParams } from 'react-router-dom';
 
-const MovieList = ({ movies }) => {
+const Movie = ({ movies }) => {
+  const { id } = useParams();
+
+  // Find the movie with the specified ID from the Redux store
+  const movie = movies.find((movie) => movie.id === id);
+
+  if (!movie) {
+    return <div>Movie not found.</div>;
+  }
+
   return (
-    <div className="col">
-      <table className="table table-striped table-hover">
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th>Director</th>
-            <th>Genre</th>
-            <th>Metascore</th>
-            <th></th>
-          </tr>
-        </thead>
-
-        <tbody>
-          {movies.map((movie) => (
-            <MovieListItem key={movie.id} movie={movie} />
-          ))}
-        </tbody>
-      </table>
-
-      <MovieFooter totalMovies={movies.length} />
+    <div>
+      <h2>{movie.title}</h2>
+      <p>Director: {movie.director}</p>
+      <p>Genre: {movie.genre}</p>
+      <p>Metascore: {movie.metascore}</p>
+      <p>Description: {movie.description}</p>
     </div>
   );
 };
 
 const mapStateToProps = (state) => ({
-  movies: state.movies,
+  movies: state.movies.movies, // Access the 'movies' state from the combined reducer
 });
 
-export default connect(mapStateToProps)(MovieList);
-
+export default connect(mapStateToProps)(Movie);
 
 // import React from 'react';
 // import { useParams, useHistory } from 'react-router-dom';

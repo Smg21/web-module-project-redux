@@ -31,3 +31,4 @@ const mapDispatchToProps = {
 export default connect(null, mapDispatchToProps)(MovieListItem);
 
 
+

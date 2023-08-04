@@ -1,10 +1,10 @@
+// MovieHeader.js
+
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-const MovieHeader = ({ appTitle }) => {
-  const displayFavorites = true;
-
+const MovieHeader = ({ appTitle, displayFavorites }) => {
   return (
     <div className="table-title">
       <div className="row">
@@ -29,9 +29,11 @@ const MovieHeader = ({ appTitle }) => {
 };
 
 const mapStateToProps = (state) => ({
-  appTitle: state.appTitle,
+  appTitle: state.movies.appTitle, // Access the 'appTitle' state from the 'movies' state
+  displayFavorites: state.favorites.displayFavorites, // Access the 'displayFavorites' state from the 'favorites' state
 });
 
 export default connect(mapStateToProps)(MovieHeader);
+
 
 //hh

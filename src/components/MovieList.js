@@ -1,8 +1,6 @@
-
-import { connect } from 'react-redux';
 import React from 'react';
+import { connect } from 'react-redux';
 import MovieListItem from './MovieListItem';
-import MovieFooter from './MovieFooter';
 
 const MovieList = ({ movies }) => {
   return (
@@ -24,17 +22,16 @@ const MovieList = ({ movies }) => {
           ))}
         </tbody>
       </table>
-
-      <MovieFooter totalMovies={movies.length} />
     </div>
   );
 };
 
 const mapStateToProps = (state) => ({
-  movies: state.movies,
+  movies: state.movies.movies, // Access the 'movies' state from the combined reducer
 });
 
 export default connect(mapStateToProps)(MovieList);
+
 
 
 
