@@ -3,9 +3,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import MovieListItem from './MovieListItem';
-import { addFavorite, removeFavorite } from '../actions/favoritesActions';
-
-const MovieList = ({ movies, favorites, addFavorite, removeFavorite }) => {
+const MovieList = ({ movies, displayFavorites }) => {
   return (
     <div className="col">
       <table className="table table-striped table-hover">
@@ -21,13 +19,10 @@ const MovieList = ({ movies, favorites, addFavorite, removeFavorite }) => {
 
         <tbody>
           {movies.map((movie) => (
-            <MovieListItem
-              key={movie.id}
-              movie={movie}
-              favorites={favorites}
-              addFavorite={addFavorite}
-              removeFavorite={removeFavorite}
-            />
+            // Display the movie only if displayFavorites is false OR if it's a favorited movie
+            (!displayFavorites || movie.isFavorite) && (
+              <MovieListItem key={movie.id} movie={movie} />
+            )
           ))}
         </tbody>
       </table>
@@ -36,22 +31,14 @@ const MovieList = ({ movies, favorites, addFavorite, removeFavorite }) => {
 };
 
 const mapStateToProps = (state) => ({
-  movies: state.movies.movies,
-  favorites: state.favorites.favorites,
+  movies: state.movies.movies.map((movie) => ({
+    ...movie,
+    isFavorite: state.favorites.favorites.some((favMovie) => favMovie.id === movie.id),
+  })),
+  displayFavorites: state.favorites.displayFavorites,
 });
 
-const mapDispatchToProps = {
-  addFavorite: addFavorite,
-  removeFavorite: removeFavorite,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(MovieList);
-
-
-
-
-
-
+export default connect(mapStateToProps)(MovieList);
 
 
 

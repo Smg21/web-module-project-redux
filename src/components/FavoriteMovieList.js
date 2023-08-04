@@ -5,7 +5,9 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { removeFavorite } from '../actions/favoritesActions';
 
-const FavoriteMovieList = ({ favorites, removeFavorite }) => {
+const FavoriteMovieList = ({ favorites, displayFavorites, removeFavorite }) => {
+  if (!displayFavorites) return null; // If displayFavorites is false, do not render anything
+
   return (
     <div className="col-xs savedContainer">
       <h5>Favorite Movies</h5>
@@ -14,9 +16,7 @@ const FavoriteMovieList = ({ favorites, removeFavorite }) => {
           <Link className="btn btn-light savedButton" to={`/movies/${movie.id}`}>
             {movie.title}
           </Link>
-          <button onClick={() => removeFavorite(movie.id)}>
-            Remove from Favorites
-          </button>
+          <button onClick={() => removeFavorite(movie.id)}>Remove from Favorites</button>
         </div>
       ))}
     </div>
@@ -25,6 +25,7 @@ const FavoriteMovieList = ({ favorites, removeFavorite }) => {
 
 const mapStateToProps = (state) => ({
   favorites: state.favorites.favorites,
+  displayFavorites: state.favorites.displayFavorites,
 });
 
 const mapDispatchToProps = {
@@ -32,4 +33,5 @@ const mapDispatchToProps = {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(FavoriteMovieList);
+
 

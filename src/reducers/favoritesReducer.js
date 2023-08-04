@@ -1,6 +1,4 @@
-// favoritesReducer.js
-
-import { ADD_FAVORITE, TOGGLE_FAVORITES, REMOVE_FAVORITE } from "../actions/favoritesActions";
+import { ADD_FAVORITE, TOGGLE_FAVORITES, REMOVE_FAVORITE, TOGGLE_FAVORITE } from "../actions/favoritesActions";
 
 const initialState = {
   favorites: [],
@@ -9,24 +7,25 @@ const initialState = {
 
 const favoritesReducer = (state = initialState, action) => {
   switch (action.type) {
-    case ADD_FAVORITE:
-      // Check if the movie is not already in favorites to avoid duplicates
-      if (!state.favorites.some((movie) => movie.id === action.payload.id)) {
-        return {
-          ...state,
-          favorites: [...state.favorites, action.payload],
-        };
-      }
-      return state;
     case TOGGLE_FAVORITES:
       return {
         ...state,
         displayFavorites: !state.displayFavorites,
       };
+    case ADD_FAVORITE:
+      const newMovie = action.payload;
+      if (!state.favorites.some((favMovie) => favMovie.id === newMovie.id)) {
+        return {
+          ...state,
+          favorites: [...state.favorites, newMovie],
+        };
+      }
+      return state;
     case REMOVE_FAVORITE:
+      const movieId = action.payload;
       return {
         ...state,
-        favorites: state.favorites.filter((movie) => movie.id !== action.payload),
+        favorites: state.favorites.filter((favMovie) => favMovie.id !== movieId),
       };
     default:
       return state;
@@ -34,4 +33,3 @@ const favoritesReducer = (state = initialState, action) => {
 };
 
 export default favoritesReducer;
-
